@@ -1,0 +1,11 @@
+.nameCourse {
+  margin: 50px 0 30px 0;
+  color: coral;
+}
+
+.nameTeaCher, .detail {
+  margin-left: 30px;
+  margin-bottom: 20px;
+  font-size: 16px;
+  color: #4c453d;
+}
