@@ -3,25 +3,25 @@ import "./detailCourse.css";
 
 class detailCourse extends Component {
   state = {
-    nameCourse: "JAV",
+    nameCourse: "日本語",
     nameTeacher: "Ngô Đức Trung",
-    detail: "Course JAV Pro",
+    detail: "満点",
     isListCourse: false,
     total: 0,
     listCourses: [
       {
         id: 1,
-        name: "Thế 69",
+        name: "ごい",
         point: 69,
       },
       {
         id: 2,
-        name: "Thế tiều phu đốn củi",
+        name: "文法",
         point: 70,
       },
       {
         id: 3,
-        name: "Vét máng thần chưởng",
+        name: "読解",
         point: 100,
       },
     ],
@@ -100,7 +100,7 @@ class detailCourse extends Component {
                     <tbody>
                         {this.showListCourse(listCourses)}
                         <tr>
-                          <td></td>
+                          <td>Total</td>
                           <td>{total}</td>
                         </tr>
                     </tbody>

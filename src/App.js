@@ -6,8 +6,8 @@ import MyProfile from './components/myProfile/myProfile';
 function App() {
   return (
     <div className="App">
-      <DetailCourse />
-      {/*<MyProfile />*/}
+     {/* <DetailCourse />*/}
+      <MyProfile />
     </div>
   );
 }
