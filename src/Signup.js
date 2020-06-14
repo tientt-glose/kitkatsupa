@@ -1,8 +1,7 @@
   import React from 'react';
   import './Signup.css';
   import * as axios from 'axios';
-
-
+  import Header from './component/Header';
 
 class Signup extends React.Component {
   constructor(props) {
@@ -52,6 +51,7 @@ class Signup extends React.Component {
     return (
      
       <div className="App">
+        <Header />
         <div className="signup-form">
           <form>
             <h2>SignUp</h2>
