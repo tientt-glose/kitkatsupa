@@ -1,44 +1,90 @@
   import React from 'react';
-  import logo from './logo.svg';
-  import './App.css';
   import './Signup.css';
+  import * as axios from 'axios';
 
 
-  function SignUp() {
-    return (
-      <div className="App">
-          <div className="signup-form">
-            <form action="/examples/actions/confirmation.php" method="post">
-            <h2>SignUp</h2>
-            <p className="hint-text">Create your account. It's free and only takes a minute.</p>
-                <div className="form-group">
-                    <input type="name" className="form-control" name="name" placeholder="name" required="required"></input>
-                </div>
-                <div className="form-group">
-                    <input type="fullname" className="form-control" name="fullname" placeholder="fullname" required="required"></input>
-                </div>
-                <div className="form-group">
-                    <input type="email" className="form-control" name="email" placeholder="Email" required="required"></input>
-                </div>
-                <div className="form-group">
-                    <input type="password" className="form-control" name="password" placeholder="Password" required="required"></input>
-                </div>
-                    
-                <div className="form-group">
-                    <input type="SDT" className="form-control" name="password" placeholder="SDT" required="required"></input>
-                </div>
-                  
-            
-            
-            
-            <div className="form-group">
-            <button type="submit" className="btn btn-success btn-lg btn-block">SignUp Now</button>
-            </div>
-            </form>
-          <div className="text-center">Already have an account? <a href="#">Sign in</a></div>
-          </div>
-      </div>
-      );
+
+class Signup extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      fullname: '',
+      username: '',
+      email: '',
+      password: '',
+      password_confirm: '',
+      error: '',
+      loading: false
+    };
+    this.register = this.register.bind(this);
+    this.handleChange = this.handleChange.bind(this);
+  }
+  handleChange(event) {
+    const target = event.target;
+    const name = target.name;
+    const value = target.value;
+    this.setState({
+      [name]: value
+    });
   }
 
-  export default SignUp;
+  async register(event) {
+    event.preventDefault()
+    this.setState({loading: true})
+    try {
+    const response = await axios.post('http://kitkat-api.herokuapp.com/auth/register', {
+      username: this.state.username, // Dữ liệu được gửi lên endpoint 
+      password: this.state.password,
+      password_confirm: this.state.password_confirm,
+      email: this.state.email,
+      fullname: this.state.fullname,
+    })
+    console.log({data: response.data})
+    } catch(err) {
+      console.error({err})
+      this.setState({error: err.response.data.message})
+    }
+    this.setState({loading: false})
+   }
+
+
+  render () {
+    return (
+     
+      <div className="App">
+        <div className="signup-form">
+          <form>
+            <h2>SignUp</h2>
+            <p className="hint-text">Create your account. It's free and only takes a minute.</p>
+            <div className="form-group">
+                <input type="text" className="form-control" name="username" value={this.state.username} onChange={this.handleChange} placeholder="Name" required="required"></input>
+            </div>
+            <div className="form-group">
+                <input type="text" className="form-control" name="fullname" value={this.state.fullname} onChange={this.handleChange}  placeholder="Fullname" ></input>
+            </div>
+            <div className="form-group">
+                <input type="email" className="form-control" name="email" value={this.state.email} onChange={this.handleChange} placeholder="Email"></input>
+            </div>
+            <div className="form-group">
+                <input type="password" className="form-control" name="password" value={this.state.password} onChange={this.handleChange} placeholder="Password" required="required"></input>
+            </div>
+            <div className="form-group"> 
+                <input type="password" className="form-control" name="password_confirm" value={this.state.password_confirm} onChange={this.handleChange}  placeholder="Password_confirm" required="required"></input>
+            </div>
+            <div className="form-group">
+                <button className="btn btn-success btn-lg btn-block" onClick={this.register}>SignUp Now</button>
+            </div>
+            {
+              this.state.loading && <div class="loader"></div>
+            }
+            <p style={{color: 'red'}} >{this.state.error}</p>
+          </form>
+        </div>
+      </div>
+      
+    )
+    
+  };
+}
+    
+  export default Signup;
