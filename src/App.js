@@ -2,10 +2,9 @@ import React, { Component } from 'react';
 import { BrowserRouter, Route } from 'react-router-dom';
 import './App.css';
 import Signup from './Signup';
-import Signin from './Signin/Signin';
-import CouresInfo from './component/CouresInfo';
 import CoursesListForStudent from './container/CoursesListForStudent';
-
+import CouresInfo from './component/CouresInfo';
+import LoginForm from './Signin/LoginForm';
 class App extends Component {
   render() {
     return (
@@ -18,7 +17,7 @@ class App extends Component {
 
           <Route exact path = '/sign-in'
             render={(props) => {
-              return <Signin />
+              return <LoginForm />
             }} />
 
           <Route exact path='/sign-up'

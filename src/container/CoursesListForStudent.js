@@ -25,27 +25,6 @@ class CoursesListForStudent extends Component {
                 console.log(response.data);
             })
             .catch(err => console.log(err));
-        // fetch("http://kitkat-api.herokuapp.com/api/courses")
-        //     .then(res => res.json())
-        //     .then(
-        //         (result) => {
-        //             this.setState({
-        //                 isLoaded: true,
-        //                 items: result.items
-        //             });
-        //             console.log(20);
-        //             console.log(this.state.items);
-        //         },
-        //         // Note: it's important to handle errors here
-        //         // instead of a catch() block so that we don't swallow
-        //         // exceptions from actual bugs in components.
-        //         (error) => {
-        //             this.setState({
-        //                 isLoaded: true,
-        //                 error
-        //             });
-        //         }
-        //     )
     }
 
     render() {

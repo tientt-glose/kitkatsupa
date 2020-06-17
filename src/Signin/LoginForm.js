@@ -1,127 +1,102 @@
 import React from 'react';
-import InputField from './InputField'
-import SubmitButton from './SubmitButton'
-import UserStore from './UserStore';
 import * as axios from 'axios';
-import { withRouter } from 'react-router-dom';
+import { Form } from 'reactstrap';
+import Header from '../container/Header';
+import { Link, Redirect } from 'react-router-dom';
 
 class LoginForm extends React.Component {
 
 	constructor(props) {
 		super(props);
+		let loggedIn = true
+		const Token = localStorage.getItem("token")
+		if (Token === null) {
+			loggedIn = false
+		}
 		this.state = {
 			username: '',
 			password: '',
+			loggedIn,
 			buttonDisabled: false,
 			loading: false,
 			error: '',
-			
 		}
+		this.login = this.login.bind(this);
+		this.handleChange = this.handleChange.bind(this);
 	}
-	setInputValue(property, val) {
-		val = val.trim();
-		if (val.length > 12) {
-			return;
-		}
+	handleChange(event) {
+		const target = event.target;
+		const name = target.name;
+		const value = target.value;
 		this.setState({
-			[property]: val
-		})
-	}
-	resetForm() {
-		this.setState({
-			username: '',
-			password: '',
-			buttonDisabled: false
-
-		})
-	}
-	// async doLogin() {
-	// 	if (!this.state.username) {
-	// 		return;
-	// 	}
-	// 	if (!this.state.password) {
-	// 		return;
-	// 	}
-	// 	this.setState({
-	// 		buttonDisabled: true
-	// 	})
-	// 	try {
-	// 		let res = await fetch('/login', {
-	// 			metod: 'post',
-	// 			headers: {
-	// 				'Accept': 'application/json',
-	// 				'Content-Type': 'application/json'
-	// 			},
-	// 			body: JSON.stringifly({
-	// 				username: this.state.username,
-	// 				password: this.state.password
-	// 			})
-	// 		}
-	// 		);
-
-	// 		let result = await res.json();
-	// 		if (result && result.success) {
-	// 			UserStore.isLoggedIn = true;
-	// 			UserStore.username = result.username;
-	// 		}
-
-	// 		else if (result && result.success === false) {
-	// 			this.resetForm();
-	// 			alert(result.msg);
-	// 		}
-	// 	}
-
-	// 	catch (e) {
-	// 		console.log(e);
-	// 		this.resetForm();
-	// 	}
-	// }
-
-	async login(event) {
-		// event.preventDefault();
-		this.setState({ loading: true })
-		const response = await axios.post('http://kitkat-api.herokuapp.com/auth/login', {
-			username: this.state.username, // Dữ liệu được gửi lên endpoint 
-			password: this.state.password,
-		}).then(res => {
-			this.setState({ loading: false })
-			this.props.history.push('/');
-		}).catch(err => {
-			console.error({ err })
-			this.setState({ error: err.response.data.message });
-			this.setState({ loading: false })
-
+			[name]: value
 		});
+	}
+	async login(event) {
+		this.setState({ 
+			error: '',
+			buttonDisabled: true
+		})
+		event.preventDefault();
+		this.setState({ loading: true })
+
+		try {
+			const response = await axios.post('http://kitkat-api.herokuapp.com/auth/login', {
+				username: this.state.username, // Dữ liệu được gửi lên endpoint 
+				password: this.state.password,
+			})
+			console.log({ data: response.data })
+			localStorage.setItem("token", response.data.token)
+			localStorage.setItem("id", response.data.id)
+			localStorage.setItem("username", response.data.username)
+			this.setState({
+				loggedIn: true
+			})
+		} catch (err) {
+			console.error({ err })
+			this.setState({ error: err.response.data.message })
+		}
+		this.setState({ 
+			loading: false,
+			buttonDisabled: false
+		 })
 	}
 
 	render() {
+		if (this.state.loggedIn) {
+			return <Redirect to="/" />
+		}
 		return (
-			<div className="loginForm">
-				<h4 >* ログイン	</h4>
-				<InputField
-					type='text'
-					placeholder='ユーザー名	'
-					value={this.state.username ? this.state.username : ''}
-					onChange={(val) => this.setInputValue('username', val)}
-				/>
-
-				<InputField
-					type='password'
-					placeholder='パスワード	'
-					value={this.state.password ? this.state.password : ''}
-					onChange={(val) => this.setInputValue('password', val)}
-				/>
-
-				<SubmitButton className="loginboder"
-
-					text='ログイン'
-					disable={this.state.buttonDisabled}
-					onClick={() => this.login()}
-				/>
-				<span>{this.state.error}</span>
-
+			<div className="App">
+				<Header />
+				<div className="signup-form">
+					<Form>
+						<h2>ログイン</h2>
+						<div className="form-group">
+							<input type="text" className="form-control" name="username" value={this.state.username} onChange={this.handleChange} placeholder="ユーザー名" required="required"></input>
+						</div>
+						<div className="form-group">
+							<input type="password" className="form-control" name="password" value={this.state.password} onChange={this.handleChange} placeholder="パスワード" required="required"></input>
+						</div>
+						<Link to={`/`}>
+							<div className="form-group">
+								<button
+									className='btn btn-success btn-lg btn-block'
+									disabled={this.state.buttonDisabled}
+									onClick={this.login}
+								>
+									ログイン
+							</button>
+							</div>
+						</Link>
+						{
+							this.state.loading && <div className="loader"  ></div>
+						}
+						<p style={{ color: 'red' }} >{this.state.error}</p>
+					</Form>
+				</div>
 			</div>
 		);
 	}
 }
-export default withRouter(LoginForm);
+export default LoginForm;

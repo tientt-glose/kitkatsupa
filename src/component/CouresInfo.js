@@ -1,6 +1,5 @@
 import React from 'react';
 import { Steps, Layout } from 'antd';
-import './info.css';
 const { Step } = Steps;
 
 const { Header, Footer, Sider, Content } = Layout;

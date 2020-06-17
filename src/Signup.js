@@ -89,7 +89,7 @@ class Signup extends React.Component {
             </p>
            
             {
-              this.state.loading && <div class="loader"  ></div>
+              this.state.loading && <div className="loader"  ></div>
             }
             {
               this.state.Success && <div class="success"  >成功</div>
