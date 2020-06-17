@@ -3,8 +3,9 @@ import { BrowserRouter, Route } from 'react-router-dom';
 import './App.css';
 import Signup from './Signup';
 import Signin from './Signin/Signin';
-import CouresListForStudent from './component/CouresListForStudent';
 import CouresInfo from './component/CouresInfo';
+import CoursesListForStudent from './container/CoursesListForStudent';
+
 class App extends Component {
   render() {
     return (
@@ -12,7 +13,7 @@ class App extends Component {
         <BrowserRouter>
           <Route exact path='/'
             render={(props) => {
-              return <CouresListForStudent />
+              return <CoursesListForStudent />
             }} />
 
           <Route exact path = '/sign-in'

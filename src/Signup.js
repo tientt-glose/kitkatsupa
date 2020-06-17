@@ -1,7 +1,7 @@
   import React from 'react';
   import './Signup.css';
   import * as axios from 'axios';
-  import Header from './component/Header';
+  import Header from './container/Header';
 
 class Signup extends React.Component {
   constructor(props) {
