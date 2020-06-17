@@ -28,8 +28,10 @@ class Signup extends React.Component {
   }
 
   async register(event) {
+    this.setState({error: ''})
     event.preventDefault()
     this.setState({loading: true})
+    
     try {
     const response = await axios.post('http://kitkat-api.herokuapp.com/auth/register', {
       username: this.state.username, // Dữ liệu được gửi lên endpoint 
@@ -44,6 +46,7 @@ class Signup extends React.Component {
       this.setState({error: err.response.data.message})
     }
     this.setState({loading: false})
+    
    }
 
 
@@ -54,30 +57,31 @@ class Signup extends React.Component {
         <Header />
         <div className="signup-form">
           <form>
-            <h2>SignUp</h2>
-            <p className="hint-text">Create your account. It's free and only takes a minute.</p>
+            <h2>サインアップ</h2>
+            <p className="hint-text">アカウントを作成。無料で、わずか1分で完了します。</p>
             <div className="form-group">
-                <input type="text" className="form-control" name="username" value={this.state.username} onChange={this.handleChange} placeholder="Name" required="required"></input>
+                <input type="text" className="form-control" name="username" value={this.state.username} onChange={this.handleChange} placeholder="ユーザー名" required="required"></input>
             </div>
             <div className="form-group">
-                <input type="text" className="form-control" name="fullname" value={this.state.fullname} onChange={this.handleChange}  placeholder="Fullname" ></input>
+                <input type="text" className="form-control" name="fullname" value={this.state.fullname} onChange={this.handleChange}  placeholder="フルネーム" ></input>
             </div>
             <div className="form-group">
-                <input type="email" className="form-control" name="email" value={this.state.email} onChange={this.handleChange} placeholder="Email"></input>
+                <input type="email" className="form-control" name="email" value={this.state.email} onChange={this.handleChange} placeholder="メールアドレス"></input>
             </div>
             <div className="form-group">
-                <input type="password" className="form-control" name="password" value={this.state.password} onChange={this.handleChange} placeholder="Password" required="required"></input>
+                <input type="password" className="form-control" name="password" value={this.state.password} onChange={this.handleChange} placeholder="パスワード" required="required"></input>
             </div>
             <div className="form-group"> 
-                <input type="password" className="form-control" name="password_confirm" value={this.state.password_confirm} onChange={this.handleChange}  placeholder="Password_confirm" required="required"></input>
+                <input type="password" className="form-control" name="password_confirm" value={this.state.password_confirm} onChange={this.handleChange}  placeholder="パスワード確認" required="required"></input>
             </div>
             <div className="form-group">
-                <button className="btn btn-success btn-lg btn-block" onClick={this.register}>SignUp Now</button>
+                <button className="btn btn-success btn-lg btn-block" onClick={this.register}>サインアップ</button>
             </div>
             {
-              this.state.loading && <div class="loader"></div>
+              this.state.loading && <div class="loader"  ></div>
             }
             <p style={{color: 'red'}} >{this.state.error}</p>
+
           </form>
         </div>
       </div>
