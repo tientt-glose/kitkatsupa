@@ -1,7 +1,7 @@
   import React from 'react';
   import './Signup.css';
   import * as axios from 'axios';
-  import Header from './component/Header';
+  import Header from './container/Header';
 
 class Signup extends React.Component {
   constructor(props) {
@@ -15,7 +15,8 @@ class Signup extends React.Component {
       password: '',
       password_confirm: '',
       error: '',
-      loading: false
+      loading: false,
+      buttonDisabled: false
     };
     this.register = this.register.bind(this);
     this.handleChange = this.handleChange.bind(this);
@@ -32,6 +33,7 @@ class Signup extends React.Component {
   async register(event) {
     this.setState({error: ''})// Ẩn thông báo lỗi
     this.setState({Success: false})
+    this.setState({buttonDisabled: true})
     event.preventDefault()
     this.setState({loading: true})
     
@@ -45,14 +47,20 @@ class Signup extends React.Component {
       fullname: this.state.fullname,
     })
     console.log({data: response.data});
-    this.setState({Success: true})
+    this.setState({
+      Success: true,
+      buttonDisabled: false
+    })
 
     } catch(err) {
      
       console.error({err})
       this.setState({error: err.response.data.message})
     }
-    this.setState({loading: false})
+    this.setState({
+      loading: false,
+      buttonDisabled: false
+    })
    
    }
 
@@ -82,14 +90,14 @@ class Signup extends React.Component {
                 <input type="password" className="form-control" name="password_confirm" value={this.state.password_confirm} onChange={this.handleChange}  placeholder="パスワード確認" required="required"></input>
             </div>
             <div className="form-group">
-                <button className="btn btn-success btn-lg btn-block" onClick={this.register}>サインアップ</button>
+                <button className="btn btn-success btn-lg btn-block" onClick={this.register} disabled={this.state.buttonDisabled}>サインアップ</button>
             </div>
             <p className="loginhere">すでにアカウントをお持ちですか？ 
-                <a href="#" className="loginhere-link">ここでログイン</a>
+                <a href="/sign-in" className="loginhere-link">ここでログイン</a>
             </p>
            
             {
-              this.state.loading && <div class="loader"  ></div>
+              this.state.loading && <div className="loader"  ></div>
             }
             {
               this.state.Success && <div class="success"  >成功</div>
