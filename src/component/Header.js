@@ -1,5 +1,6 @@
 import React, { Component} from 'react';
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
+
 import {
     Collapse,
     Navbar,
@@ -26,7 +27,7 @@ class Header extends Component {
                                 <NavLink href="/">コース</NavLink>
                             </NavItem>
                         </Nav>
-                        <NavbarText><Button color="primary">サインイン</Button></NavbarText>
+                        <NavbarText><Button onClick={() => this.props.history.push("/sign-in")} color="primary">サインイン</Button></NavbarText>
                         <NavbarText><Link to={`/sign-up`}><Button color="secondary" style={{ marginLeft: 10 }}>サインアップ</Button></Link></NavbarText>
                     </Collapse>
                 </Navbar>
@@ -35,4 +36,4 @@ class Header extends Component {
     }
 }
 
-export default Header;
+export default withRouter(Header);

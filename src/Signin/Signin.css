@@ -1,0 +1,87 @@
+body, html, #root, .app {
+  width: auto;
+  height: auto;
+}
+
+
+.containerr {
+  width: 100px;
+  height: 400px;
+  font-size: 40px;
+  color: #fff;
+  border-style: dotted;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: gray;
+  border: royalblue;
+  padding-left: 100px;
+}
+.loginboder{
+  border-style: solid;
+  border-color: blue;
+}
+span{
+  color:red ;
+  padding-bottom: 50px;
+}
+.loginForm {
+ box-sizing: 10px;
+ width: none;
+ max-width:100%;
+ max-height: 100%;
+ padding-left: 50px;
+ padding-right: 50px;
+ padding-top: 50px;
+ border-style: solid;
+ border-color: black;
+ border-width: 10pxpx;
+ margin-left: 500px;
+ margin-right: 500px;
+ margin-top: 100px;
+ background-color: grey;
+}
+h4{
+  color: #1189de;
+}
+
+.inputField {
+ padding-top: 16px;
+}
+
+.input {
+ box-sizing: border-box;
+ outline: none;
+ border: solid 2px #1189de;
+ 
+ color: gray;
+ width: 100%;
+ padding: 12px;
+ font-size: 14px;
+ background: white;
+}
+
+.submitButton {
+ background-size: none;
+ background-color: white;
+ text-decoration-color:green;
+ border-color: lightseagreen;
+ 
+ margin-top: 30px;
+ margin-bottom: 100px;
+ 
+}
+
+
+.btn {
+ width: none;
+ min-width: 280px;
+ color:red;
+ padding: 20px;
+ font-size: 14px;
+ font-weight: solid;
+ border: 2px #1189de;
+ border-style: solid;
+ background: #fff;
+ cursor: pointer;
+}
