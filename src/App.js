@@ -5,6 +5,8 @@ import Signup from './Signup';
 import CoursesListForStudent from './container/CoursesListForStudent';
 import CouresInfo from './component/CouresInfo';
 import LoginForm from './Signin/LoginForm';
+import MyProfile from './component/myProfile/myProfile';
+import DetailCourse from './component/detailCourse/detailCourse';
 class App extends Component {
   render() {
     return (
@@ -15,7 +17,7 @@ class App extends Component {
               return <CoursesListForStudent />
             }} />
 
-          <Route exact path = '/sign-in'
+          <Route exact path='/sign-in'
             render={(props) => {
               return <LoginForm />
             }} />
@@ -25,9 +27,19 @@ class App extends Component {
               return <Signup />
             }} />
 
-<Route exact path='/CouresInfo'
+          <Route exact path='/CouresInfo'
             render={(props) => {
               return <CouresInfo />
+            }} />
+
+          <Route exact path='/detailCourse'
+            render={(props) => {
+              return <DetailCourse />
+            }} />
+
+          <Route exact path='/profile'
+            render={(props) => {
+              return <MyProfile />
             }} />
 
         </BrowserRouter>

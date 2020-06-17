@@ -1,24 +1,18 @@
-import React from 'react';
-import { Steps, Layout } from 'antd';
-const { Step } = Steps;
+import React, { Component } from 'react';
+import { Container, Row, Col } from 'reactstrap';
 
-const { Header, Footer, Sider, Content } = Layout;
 
-const CouresInfo = () => {
+class CouresInfo extends Component{
 
+  render(){
     return(
-        <div>
-        <Layout>
-          <Header>レッスン名 :	</Header>
-          <Content>YouTubeフレーム</Content>
-          <Content> - </Content>
-          <Content> - </Content>
-          <Content> - </Content>
-          <Footer className="foot">宿題	</Footer>
-          <Footer>宿題	</Footer>
-        </Layout>
-      </div>
-    );
+      <Row>
+        <Col xs="6" sm="4">.col-6 .col-sm-4</Col>
+        <Col xs="6" sm="4">.col-6 .col-sm-4</Col>
+        <Col sm="4">.col-sm-4</Col>
+      </Row>
+      );
+  }  
 
 }
 
