@@ -7,6 +7,8 @@ class Signup extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      
+      Success: false,
       fullname: '',
       username: '',
       email: '',
@@ -28,11 +30,13 @@ class Signup extends React.Component {
   }
 
   async register(event) {
-    this.setState({error: ''})
+    this.setState({error: ''})// Ẩn thông báo lỗi
+    this.setState({Success: false})
     event.preventDefault()
     this.setState({loading: true})
     
     try {
+    
     const response = await axios.post('http://kitkat-api.herokuapp.com/auth/register', {
       username: this.state.username, // Dữ liệu được gửi lên endpoint 
       password: this.state.password,
@@ -40,13 +44,16 @@ class Signup extends React.Component {
       email: this.state.email,
       fullname: this.state.fullname,
     })
-    console.log({data: response.data})
+    console.log({data: response.data});
+    this.setState({Success: true})
+
     } catch(err) {
+     
       console.error({err})
       this.setState({error: err.response.data.message})
     }
     this.setState({loading: false})
-    
+   
    }
 
 
@@ -77,9 +84,17 @@ class Signup extends React.Component {
             <div className="form-group">
                 <button className="btn btn-success btn-lg btn-block" onClick={this.register}>サインアップ</button>
             </div>
+            <p className="loginhere">すでにアカウントをお持ちですか？ 
+                <a href="#" className="loginhere-link">ここでログイン</a>
+            </p>
+           
             {
               this.state.loading && <div class="loader"  ></div>
             }
+            {
+              this.state.Success && <div class="success"  >成功</div>
+            }
+           
             <p style={{color: 'red'}} >{this.state.error}</p>
 
           </form>
