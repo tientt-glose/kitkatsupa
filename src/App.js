@@ -3,6 +3,8 @@ import { BrowserRouter, Route } from 'react-router-dom';
 import './App.css';
 import Signup from './Signup';
 import CouresListForStudent from './component/CouresListForStudent';
+import MyProfile from './component/myProfile/myProfile';
+import DetailCourse from './component/detailCourse/detailCourse';
 
 class App extends Component {
   render() {
@@ -17,6 +19,16 @@ class App extends Component {
           <Route exact path='/sign-up'
             render={(props) => {
               return <Signup />
+            }} />
+
+          <Route exact path='/detailCourse'
+            render={(props) => {
+              return <DetailCourse />
+            }} />
+
+          <Route exact path='/profile'
+            render={(props) => {
+              return <MyProfile />
             }} />
 
         </BrowserRouter>
