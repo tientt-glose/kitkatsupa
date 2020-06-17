@@ -33,7 +33,7 @@ class LoginForm extends React.Component {
 		});
 	}
 	async login(event) {
-		this.setState({ 
+		this.setState({
 			error: '',
 			buttonDisabled: true
 		})
@@ -56,10 +56,10 @@ class LoginForm extends React.Component {
 			console.error({ err })
 			this.setState({ error: err.response.data.message })
 		}
-		this.setState({ 
+		this.setState({
 			loading: false,
 			buttonDisabled: false
-		 })
+		})
 	}
 
 	render() {
@@ -89,6 +89,9 @@ class LoginForm extends React.Component {
 							</button>
 							</div>
 						</Link>
+						<p className="loginhere">アカウントを持っていませんか?
+                			<a href="/sign-up" className="loginhere-link">ここでサインアップ</a>
+						</p>
 						{
 							this.state.loading && <div className="loader"  ></div>
 						}
