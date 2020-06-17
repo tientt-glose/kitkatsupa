@@ -12,17 +12,17 @@ class detailCourse extends Component {
     listCourses: [
       {
         id: 1,
-        name: "Thế 69",
+        name: "a",
         point: 69,
       },
       {
         id: 2,
-        name: "Thế tiều phu đốn củi",
+        name: "b",
         point: 70,
       },
       {
         id: 3,
-        name: "Vét máng thần chưởng",
+        name: "c",
         point: 100,
       },
     ],
@@ -95,7 +95,7 @@ class detailCourse extends Component {
           <p className='detail'>まとめ内客: {detail}</p>
         </div>
 
-        <div className='row'>
+        {/* <div className='row'>
           <div className='col-xs-12 col-sm-12 col-md-12 col-lg-12'>
             <div className='panel panel-primary'>
               <div className='panel-heading'>
@@ -130,7 +130,7 @@ class detailCourse extends Component {
               </div>
             </div>
           </div>
-        </div>
+        </div> */}
       </div>
     );
   }

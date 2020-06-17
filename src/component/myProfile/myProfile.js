@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import axios from "axios";
+import { withRouter } from 'react-router-dom';
 
 class myProfile extends Component {
   state = {
@@ -32,6 +33,7 @@ class myProfile extends Component {
     })
       .then((res) => {
         console.log(res.data);
+        this.props.history.push('/');
       })
       .catch((err) => {
         console.log(err);
@@ -112,4 +114,4 @@ class myProfile extends Component {
   }
 }
 
-export default myProfile;
+export default withRouter(myProfile);
