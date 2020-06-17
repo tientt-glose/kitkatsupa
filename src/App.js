@@ -3,7 +3,7 @@ import { BrowserRouter, Route } from 'react-router-dom';
 import './App.css';
 import Signup from './Signup';
 import CoursesListForStudent from './container/CoursesListForStudent';
-import CouresInfo from './component/CouresInfo';
+import LessonInfo from './component/lessonInfo';
 import LoginForm from './Signin/LoginForm';
 import MyProfile from './component/myProfile/myProfile';
 import DetailCourse from './component/detailCourse/detailCourse';
@@ -27,9 +27,9 @@ class App extends Component {
               return <Signup />
             }} />
 
-          <Route exact path='/CouresInfo'
+          <Route exact path='/lessonInfo'
             render={(props) => {
-              return <CouresInfo />
+              return <LessonInfo />
             }} />
 
           <Route exact path='/detailCourse'

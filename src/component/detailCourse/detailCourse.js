@@ -1,139 +1,65 @@
-import React, { Component } from "react";
-import "./detailCourse.css";
-import axios from 'axios';
+import React, { Component } from 'react';
+import { Row, Col, Card, CardHeader, CardBody, CardSubtitle, CardText, Table } from 'reactstrap';
+import Header from '../../container/Header';
+import { Link } from 'react-router-dom';
 
 class DetailCourse extends Component {
-  state = {
-    nameCourse: "",
-    nameTeacher: "",
-    detail: "",
-    isListCourse: false,
-    total: 0,
-    listCourses: [
-      {
-        id: 1,
-        name: "a",
-        point: 69,
-      },
-      {
-        id: 2,
-        name: "b",
-        point: 70,
-      },
-      {
-        id: 3,
-        name: "c",
-        point: 100,
-      },
-    ],
-  };
-
-  componentDidMount() {
-    const { listCourses } = this.state;
-    let total = 0;
-
-    listCourses.forEach(listCourse => {
-      total = total + listCourse.point;
-    })
-
-    this.setState({
-      total: total
-    });
-
-    this.listenCourse();
-  }
-
-  async listenCourse() {
-    await axios({
-      method: 'GET',
-      url: 'http://kitkat-api.herokuapp.com/api/courses/820346cf-232a-49dc-8c73-9e8354bef18a',
-      body: null
-    }).then(res => {
-      console.log(res.data);
-      const { title, description, teacher } = res.data;
-      this.setState({
-        nameCourse: title,
-        detail: description,
-        nameTeacher: teacher.fullname
-      });
-    }).catch(err => {
-      console.log(err);
-    })
-  }
-
-  showList = () => {
-    this.setState({
-      isListCourse: !this.state.isListCourse,
-    });
-  };
-
-  showListCourse = listCourses => {
-    let result = null;
-
-    if( listCourses.length > 0) {
-      result = listCourses.map((listCourse, index) => {
-        return (
-          <tr key={index}>
-            <td>{listCourse.name}</td>
-            <td>{listCourse.point}</td>
-          </tr>
-        );
-      });
-    }
-
-    return result;
-  };
 
   render() {
-    const { nameCourse, nameTeacher, detail, isListCourse, listCourses, total } = this.state;
-
     return (
-      <div className='container'>
-        <div className='row'>
-          <h1 className='text-center nameCourse'>コース名: {nameCourse}</h1>
-          <p className='nameTeaCher'>教師: {nameTeacher}</p>
-          <p className='detail'>まとめ内客: {detail}</p>
-        </div>
+      <div>
+        <Header />
+        <div style={{ margin: 50 }}>
 
-        {/* <div className='row'>
-          <div className='col-xs-12 col-sm-12 col-md-12 col-lg-12'>
-            <div className='panel panel-primary'>
-              <div className='panel-heading'>
-                <button
-                  type='button'
-                  className='btn btn-success'
-                  style={{ float: "right", position: "relative", top: "-8px" }}
-                  onClick={this.showList}
-                >
-                  入学
-                </button>
-                <h3 className='panel-title'>レッスンのリスト</h3>
-              </div>
-              <div className='panel-body'>
-                {isListCourse && (
-                  <table className='table table-hover'>
-                    <thead>
-                      <tr>
-                        <th>レッスン名</th>
-                        <th>点</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                        {this.showListCourse(listCourses)}
-                        <tr>
-                          <td></td>
-                          <td>{total}</td>
-                        </tr>
-                    </tbody>
-                  </table>
-                )}
-              </div>
-            </div>
-          </div>
-        </div> */}
+          <Row>
+            <Col xs="6" sm="4">
+              <Card outline color="primary">
+                <CardHeader><h3>IT日本語</h3></CardHeader>
+                <CardBody>
+                  <CardSubtitle>教師：Kazuki Hirata </CardSubtitle>
+                  <CardText>内容：この授業では、日本で活躍できるエンジニアになるために、日本語を用いてJS言語と根本原因と報連相などのような学習を行います。</CardText>
+                </CardBody>
+              </Card>
+            </Col>
+            <Col xs="12" sm="8">
+              <h2>レッスンリスト</h2>
+              <Table striped>
+                <thead>
+                  <tr>
+                    <th>#</th>
+                    <th>レッスン名</th>
+                    {/* <th>Last Name</th>
+                    <th>Username</th> */}
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <th scope="row">1</th>
+                    <Link to={`/lessonInfo`}><td>Lesson 1</td></Link>
+                    {/* <td>Otto</td>
+                    <td>@mdo</td> */}
+                  </tr>
+                  <tr>
+                    <th scope="row">2</th>
+                    <td>Lesson 2</td>
+                    {/* <td>Thornton</td>
+                    <td>@fat</td> */}
+                  </tr>
+                  <tr>
+                    <th scope="row">3</th>
+                    <td>Lesson 3</td>
+                    {/* <td>the Bird</td>
+                    <td>@twitter</td> */}
+                  </tr>
+                </tbody>
+              </Table>
+            </Col>
+          </Row>
+        </div>
       </div>
     );
   }
+
 }
 
 export default DetailCourse;
