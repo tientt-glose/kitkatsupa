@@ -33,24 +33,46 @@ class MyProfile extends Component {
         const { name, email, password } = this.state;
         // event.preventDefault();
         console.log(this.state)
-        axios({
-            method: "GET",
-            url:
-                "http://kitkat-api.herokuapp.com/api/users/" + localStorage.getItem("id"),
-            header: {
-                'Authorization': `Bearer ${localStorage.getItem("token")}`,
-            },
-        })
-            .then((res) => {
-                console.log(res.data);
-                this.setState({
-                    name: res.data.fullname,
-                    email: res.data.email
-                })
+        console.log(localStorage.getItem("id"))
+        console.log(localStorage.getItem("token"))
+
+        axios.get(
+            "http://kitkat-api.herokuapp.com/api/users/" + localStorage.getItem("id"),
+            {
+                headers: {
+                    'Authorization': `Bearer ${localStorage.getItem("token")}`
+                },
+            }
+        )
+        .then((res) => {
+            console.log(res.data);
+            this.setState({
+                name: res.data.fullname,
+                email: res.data.email
             })
-            .catch((err) => {
-                console.log(err);
-            });
+        })
+        .catch((err) => {
+            console.log(err);
+        });
+
+        // axios({
+        //     method: "GET",
+        //     url:
+        //         "http://kitkat-api.herokuapp.com/api/users/" + localStorage.getItem("id"),
+        //     header: {
+        //         'Authorization': `Bearer ${localStorage.getItem("token")}`,
+        //     },
+        // })
+        //     .then((res) => {
+        //         console.log(res.data);
+        //         this.setState({
+        //             name: res.data.fullname,
+        //             email: res.data.email
+        //         })
+        //     })
+        //     .catch((err) => {
+        //         console.log(err);
+        //     });
     }
 
     //   async onSubmit(event) {

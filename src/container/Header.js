@@ -54,6 +54,7 @@ class Header extends Component {
                             </Nav>
                             <NavbarText>こんにちは、{localStorage.getItem("username")}さん</NavbarText>
                             <NavbarText><Button color="secondary" style={{ marginLeft: 10 }} onClick={this.handleLogout}>サインアウト</Button></NavbarText>
+                            <NavbarText><Link to={`/profile`}><Button color="secondary" style={{ marginLeft: 10 }}>プロフィール</Button></Link></NavbarText>
                         </Collapse>
                     </Navbar>
                 </div>
