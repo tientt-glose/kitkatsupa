@@ -17,24 +17,24 @@ class App extends Component {
               return <CoursesListForStudent />
             }} />
 
-          <Route exact path='/sign-in'
+          <Route exact path='/auth/sign-in'
             render={(props) => {
               return <LoginForm />
             }} />
 
-          <Route exact path='/sign-up'
+          <Route exact path='/auth/sign-up'
             render={(props) => {
               return <Signup />
             }} />
 
-          <Route exact path='/lessonInfo'
+          <Route exact path='/lesson-detail'
             render={(props) => {
-              return <LessonInfo />
+              return <LessonInfo {...props} />
             }} />
 
-          <Route exact path='/detailCourse'
+          <Route exact path='/course-detail'
             render={(props) => {
-              return <DetailCourse />
+              return <DetailCourse {...props} />
             }} />
 
           <Route exact path='/profile'

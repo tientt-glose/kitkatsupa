@@ -10,7 +10,8 @@ import {
     NavItem,
     NavLink,
     NavbarText,
-    Button
+    Button,
+    Badge
 } from 'reactstrap';
 
 class Header extends Component {
@@ -21,6 +22,17 @@ class Header extends Component {
         window.location.reload('/')
     };
     render() {
+        var role
+
+        if (localStorage.getItem("username") === 'teacher') {
+            role = <Badge color="info" style={{ marginRight: 10 }}>教師</Badge>
+        }
+        else if (localStorage.getItem("username") === 'admin') {
+            role = <Badge color="info" style={{ marginRight: 10 }}>管理者</Badge>
+        }
+        else role = <Badge color="info" style={{ marginRight: 10 }}>学習者</Badge>
+
+
         if (localStorage.getItem("token") === null) {
             return (
                 <div>
@@ -33,8 +45,8 @@ class Header extends Component {
                                     <NavLink href="/">コース</NavLink>
                                 </NavItem>
                             </Nav>
-                            <NavbarText><Button onClick={() => this.props.history.push("/sign-in")} color="primary">サインイン</Button></NavbarText>
-                            <NavbarText><Link to={`/sign-up`}><Button color="secondary" style={{ marginLeft: 10 }}>サインアップ</Button></Link></NavbarText>
+                            <NavbarText><Button onClick={() => this.props.history.push("/auth/sign-in")} color="primary">サインイン</Button></NavbarText>
+                            <NavbarText><Link to={`/auth/sign-up`}><Button color="secondary" style={{ marginLeft: 10 }}>サインアップ</Button></Link></NavbarText>
                         </Collapse>
                     </Navbar>
                 </div>
@@ -52,8 +64,9 @@ class Header extends Component {
                                     <NavLink href="/">コース</NavLink>
                                 </NavItem>
                             </Nav>
+                            <NavbarText>{role}</NavbarText>
                             <NavbarText>こんにちは、{localStorage.getItem("username")}さん</NavbarText>
-                            <NavbarText><Button color="secondary" style={{ marginLeft: 10 }} onClick={this.handleLogout}>サインアウト</Button></NavbarText>
+                            <NavbarText><Button color="danger" style={{ marginLeft: 10 }} onClick={this.handleLogout}>サインアウト</Button></NavbarText>
                             <NavbarText><Link to={`/profile`}><Button color="secondary" style={{ marginLeft: 10 }}>プロフィール</Button></Link></NavbarText>
                         </Collapse>
                     </Navbar>

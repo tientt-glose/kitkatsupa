@@ -13,19 +13,26 @@ class CoursesListForStudent extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            searchString: '',
             error: null,
             isLoaded: false,
             items: []
         };
+        this._onSearchChanged = this._onSearchChanged.bind(this);
+
     }
     componentDidMount() {
-        axios.get('http://kitkat-api.herokuapp.com/api/courses')
+        axios.get('http://kitkat-api.herokuapp.com/api/courses/anonymous')
             .then(response => {
                 this.setState({ items: response.data });
                 console.log(response.data);
             })
             .catch(err => console.log(err));
     }
+
+    _onSearchChanged = (event) => {
+        this.setState({ searchString: event.target.value })
+    };
 
     render() {
         // return (
@@ -36,9 +43,14 @@ class CoursesListForStudent extends Component {
         //         </li>
         //     ))}
         // </ul>);
-        var courselist = this.state.items.map((item, id) => (
+        const displayedProject = this.state.items.filter(
+            item =>
+                item.title.toLowerCase().includes(this.state.searchString.toLowerCase())
+        )
+
+        var courselist = displayedProject.map((item, id) => (
             <CourseItem
-                id={id}
+                id={item.id}
                 title={item.title}
                 description={item.description}
                 teacher_name={item.teacher.fullname}
@@ -50,7 +62,7 @@ class CoursesListForStudent extends Component {
                 <Header />
                 <div style={{ margin: 50 }}>
                     <InputGroup>
-                        <Input placeholder="検索のためにコース名を入力してください！" />
+                        <Input placeholder="検索のためにコース名を入力してください！" enterButton onChange={this._onSearchChanged} />
                         <InputGroupAddon addonType="append">
                             <InputGroupText><span role="img" aria-labelledby="Left_Pointing_Magnifying_Glass">🔍</span></InputGroupText>
                         </InputGroupAddon>

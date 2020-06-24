@@ -1,23 +1,77 @@
 import React, { Component } from 'react';
 import { Row, Col, Card, CardHeader, CardBody, CardSubtitle, CardText, Table } from 'reactstrap';
 import Header from '../../container/Header';
-import { Link } from 'react-router-dom';
+import { Link, Redirect} from 'react-router-dom';
+import * as axios from 'axios';
 
 class DetailCourse extends Component {
 
+  constructor(props) {
+    super(props)
+    this.state = {
+      error: null,
+      isLoaded: false,
+      course: {
+        title: "Title",
+        description: "Description",
+        teacher: {
+          fullname: "Teacher's fullname"
+        },
+        lessons: [
+
+        ]
+      }
+    };
+  }
+
+  componentDidMount() {
+    // axios.get(
+    //   "http://kitkat-api.herokuapp.com/api/users/" + localStorage.getItem("id"),
+    //   {
+    //     headers: {
+    //       'Authorization': `Bearer ${localStorage.getItem("token")}`
+    //     },
+    //   }
+    // )
+    //   .then((res) => {
+    //     console.log(res.data);
+    //     this.setState({
+    //       name: res.data.fullname,
+    //       email: res.data.email
+    //     })
+    //   })
+    //   .catch((err) => {
+    //     console.log(err);
+    //   });
+    axios.get(
+      `http://kitkat-api.herokuapp.com/api/courses/${this.props.location.state ? this.props.location.state.id : null}`,
+      {
+        headers: {
+          'Authorization': `Bearer ${localStorage.getItem("token")}`
+        },
+      }
+    )
+      .then(response => {
+        this.setState({ course: response.data });
+      })
+      .catch(err => console.log(err));
+  }
+
   render() {
+    if (!localStorage.getItem("token") || !this.props.location.state) {
+			return <Redirect to="/" />
+		}
     return (
       <div>
         <Header />
         <div style={{ margin: 50 }}>
-
           <Row>
             <Col xs="6" sm="4">
               <Card outline color="primary">
-                <CardHeader><h3>IT日本語</h3></CardHeader>
+                <CardHeader><h3>{this.state.course.title}</h3></CardHeader>
                 <CardBody>
-                  <CardSubtitle>教師：Kazuki Hirata </CardSubtitle>
-                  <CardText>内容：この授業では、日本で活躍できるエンジニアになるために、日本語を用いてJS言語と根本原因と報連相などのような学習を行います。</CardText>
+                  <CardSubtitle>教師：{this.state.course.teacher.fullname} </CardSubtitle>
+                  <CardText>内容：{this.state.course.description}</CardText>
                 </CardBody>
               </Card>
             </Col>
@@ -28,29 +82,22 @@ class DetailCourse extends Component {
                   <tr>
                     <th>#</th>
                     <th>レッスン名</th>
-                    {/* <th>Last Name</th>
-                    <th>Username</th> */}
                   </tr>
                 </thead>
                 <tbody>
-                  <tr>
-                    <th scope="row">1</th>
-                    <Link to={`/lessonInfo`}><td>Lesson 1</td></Link>
-                    {/* <td>Otto</td>
-                    <td>@mdo</td> */}
-                  </tr>
-                  <tr>
-                    <th scope="row">2</th>
-                    <td>Lesson 2</td>
-                    {/* <td>Thornton</td>
-                    <td>@fat</td> */}
-                  </tr>
-                  <tr>
-                    <th scope="row">3</th>
-                    <td>Lesson 3</td>
-                    {/* <td>the Bird</td>
-                    <td>@twitter</td> */}
-                  </tr>
+                  {
+                    this.state.course.lessons.map((lesson, index) => (
+                      <tr>
+                        <th scope="row">{index + 1}</th>
+                        <Link
+                          to={{
+                            pathname: "/lesson-detail",
+                            state: { id: lesson.id, teacher: { fullname: this.state.course.teacher.fullname }, courseId: this.state.course.id }
+                          }}
+                        ><td>{lesson.title}</td></Link>
+                      </tr>
+                    ))
+                  }
                 </tbody>
               </Table>
             </Col>
