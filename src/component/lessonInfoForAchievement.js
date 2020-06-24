@@ -1,12 +1,12 @@
-import React, { Component } from 'react';
-import { Row, Col, Card, CardHeader, CardBody, CardSubtitle, CardText, Form, FormGroup, Label, Input, Button, Table } from 'reactstrap';
-import Header from '../container/Header';
-import * as axios from 'axios';
-import { Link, Redirect } from 'react-router-dom';
+import * as axios from 'axios'
+import React, { Component } from 'react'
+import { Link, Redirect } from 'react-router-dom'
+import { Button, Card, CardBody, CardHeader, CardSubtitle, CardText, Col, Form, FormGroup, Input, Row, Table } from 'reactstrap'
+import Header from '../container/Header'
 
 class LessonInfoForAchievement extends Component {
 
-  constructor(props) {
+  constructor (props) {
     super(props)
     this.state = {
       error: null,
@@ -16,46 +16,40 @@ class LessonInfoForAchievement extends Component {
         description: "Description",
         content: "Content",
       },
-      answers: []
-    };
+      answers: null
+    }
   }
 
-  componentDidMount() {
-    console.log({ state: this.props.location.state })
-    axios.get(
-      `https://kitkat-api.herokuapp.com/api/lessons/${this.props.location.state ? this.props.location.state.id : null}`,
-      {
-        headers: {
-          'Authorization': `Bearer ${localStorage.getItem("token")}`
-        },
-      }
-    )
-      .then(response => {
-        this.setState({ lesson: response.data });
-        console.log(this.state.lesson)
-      })
-      .catch(err => console.log(err));
-
-      if (this.state.lesson.exam) {
-      axios.get(
-        `https://kitkat-api.herokuapp.com/api/exams/${this.state.lesson.exam ? this.state.lesson.exam.id : null}`,
+  async componentDidMount() {
+    try {
+      const lessonResponse = await axios.get(
+        `https://kitkat-api.herokuapp.com/api/lessons/${this.props.location.state ? this.props.location.state.id : null}`,
         {
           headers: {
             'Authorization': `Bearer ${localStorage.getItem("token")}`
           },
         }
       )
-        .then(response => {
-          this.setState({ answers: response.data });
-          console.log(this.state.answers)
-        })
-        .catch(err => console.log(err));
-      }
+      const lesson = lessonResponse.data
+      const examResponse = await axios.get(
+        `https://kitkat-api.herokuapp.com/api/exams/${lesson.exam.id}`,
+        {
+          headers: {
+            'Authorization': `Bearer ${localStorage.getItem("token")}`
+          },
+        }
+      )
+      const exam = examResponse.data
+      this.setState({ lesson })
+      this.setState({ answers: exam.answers })
+    } catch (error) {
+      console.error(error)
+    }
   }
 
   render() {
-    const { lesson } = this.state;
-    const exam = lesson ? lesson.exam : null;
+    const { lesson } = this.state
+    const exam = lesson ? lesson.exam : null
     if (!localStorage.getItem("token") || !this.props.location.state) {
       return <Redirect to="/" />
     }
@@ -105,109 +99,59 @@ class LessonInfoForAchievement extends Component {
                   </tr>
                 </thead>
                 <tbody>
-                  <tr>
-                    <th scope="row">1</th>
-                    <td>users</td>
-                    <td>Nguyen Manh Tien</td>
-                    <td><a href={`https://bit.ly/2Z84wkH`}>Click here</a></td>
-                    <td>
-                      <Form>
-                        <FormGroup row>
-                          <Col sm={3}>
-                            <Input type="select" value={Math.floor(Math.random() * 11)}>
-                              <option>0</option>
-                              <option>1</option>
-                              <option>2</option>
-                              <option>3</option>
-                              <option>4</option>
-                              <option>5</option>
-                              <option>6</option>
-                              <option>7</option>
-                              <option>8</option>
-                              <option>9</option>
-                              <option>10</option>
-                            </Input>
-                          </Col>
-                          <Col sm={2}>
-                            <h3>/10</h3>
-                          </Col>
-                        </FormGroup>
-                      </Form>
-                    </td>
-                  </tr>
-                  <tr>
-                    <th scope="row">2</th>
-                    <td>tuan33</td>
-                    <td>Manh Tuan</td>
-                    <td><a href={`https://bit.ly/37Wvb80`}>Click here</a></td>
-                    <td>
-                      <Form>
-                        <FormGroup row>
-                          <Col sm={3}>
-                            <Input type="select" value={Math.floor(Math.random() * 11)}>
-                              <option>0</option>
-                              <option>1</option>
-                              <option>2</option>
-                              <option>3</option>
-                              <option>4</option>
-                              <option>5</option>
-                              <option>6</option>
-                              <option>7</option>
-                              <option>8</option>
-                              <option>9</option>
-                              <option>10</option>
-                            </Input>
-                          </Col>
-                          <Col sm={2}>
-                            <h3>/10</h3>
-                          </Col>
-                        </FormGroup>
-                      </Form>
-                    </td>
-                  </tr>
-                  <tr>
-                    <th scope="row">3</th>
-                    <td>tunv123</td>
-                    <td>Tu Nguyen</td>
-                    <td><a href={`https://bit.ly/3fSiPAp`}>Click here</a></td>
-                    <td>
-                      <Form>
-                        <FormGroup row>
-                          <Col sm={3}>
-                            <Input type="select" value={Math.floor(Math.random() * 11)}>
-                              <option>0</option>
-                              <option>1</option>
-                              <option>2</option>
-                              <option>3</option>
-                              <option>4</option>
-                              <option>5</option>
-                              <option>6</option>
-                              <option>7</option>
-                              <option>8</option>
-                              <option>9</option>
-                              <option>10</option>
-                            </Input>
-                          </Col>
-                          <Col sm={2}>
-                            <h3>/10</h3>
-                          </Col>
-                        </FormGroup>
-                      </Form>
-                    </td>
-                  </tr>
+                  {
+                    !this.state.answers ? <p>Loading answers data...</p>
+                      : (
+                        <>
+                          {
+                            this.state.answers.length > 0 ? this.state.answers && this.state.answers.map((answer, index) => (
+                              <tr>
+                                <th scope="row">{index + 1}</th>
+                                <td>{answer.student.username}</td>
+                                <td>{answer.student.fullname}</td>
+                                <td><a href={answer.content} rel="noopener noreferrer" target="_blank">Click here</a></td>
+                                <td>
+                                  <Form>
+                                    <FormGroup row>
+                                      <Col sm={3}>
+                                        <Input type="select" value={answer.result}>
+                                          <option>0</option>
+                                          <option>1</option>
+                                          <option>2</option>
+                                          <option>3</option>
+                                          <option>4</option>
+                                          <option>5</option>
+                                          <option>6</option>
+                                          <option>7</option>
+                                          <option>8</option>
+                                          <option>9</option>
+                                          <option>10</option>
+                                        </Input>
+                                      </Col>
+                                      <Col sm={2}>
+                                        <h3>{answer.result}/10</h3>
+                                      </Col>
+                                    </FormGroup>
+                                  </Form>
+                                </td>
+                              </tr>
+                            )) : <p>答えがまだありません。</p>
+                          }
+                        </>
+                      )
+                  }
                 </tbody>
               </Table>
               <div style={{ textAlign: "right" }}>
                 <Button color="primary">編集</Button>
               </div>
             </Col>
-            {/* <Col sm="4">.col-sm-4</Col> */}
           </Row>
         </div>
       </div>
-    );
+    )
   }
 
 }
 
-export default LessonInfoForAchievement;
+export default LessonInfoForAchievement
