@@ -17,7 +17,7 @@ class DetailUser extends Component {
 
   componentDidMount() {
     axios.get(
-      `http://kitkat-api.herokuapp.com/api/users`,
+      `https://kitkat-api.herokuapp.com/api/users`,
       {
         headers: {
           'Authorization': `Bearer ${localStorage.getItem("token")}`

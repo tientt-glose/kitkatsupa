@@ -39,7 +39,7 @@ class Signup extends React.Component {
     
     try {
     
-    const response = await axios.post('http://kitkat-api.herokuapp.com/auth/register', {
+    const response = await axios.post('https://kitkat-api.herokuapp.com/auth/register', {
       username: this.state.username, // Dữ liệu được gửi lên endpoint 
       password: this.state.password,
       password_confirm: this.state.password_confirm,

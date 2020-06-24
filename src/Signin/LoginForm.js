@@ -41,7 +41,7 @@ class LoginForm extends React.Component {
 		this.setState({ loading: true })
 
 		try {
-			const response = await axios.post('http://kitkat-api.herokuapp.com/auth/login', {
+			const response = await axios.post('https://kitkat-api.herokuapp.com/auth/login', {
 				username: this.state.username, // Dữ liệu được gửi lên endpoint 
 				password: this.state.password,
 			})

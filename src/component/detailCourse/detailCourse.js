@@ -26,7 +26,7 @@ class DetailCourse extends Component {
 
   componentDidMount() {
     // axios.get(
-    //   "http://kitkat-api.herokuapp.com/api/users/" + localStorage.getItem("id"),
+    //   "https://kitkat-api.herokuapp.com/api/users/" + localStorage.getItem("id"),
     //   {
     //     headers: {
     //       'Authorization': `Bearer ${localStorage.getItem("token")}`
@@ -44,7 +44,7 @@ class DetailCourse extends Component {
     //     console.log(err);
     //   });
     axios.get(
-      `http://kitkat-api.herokuapp.com/api/courses/${this.props.location.state ? this.props.location.state.id : null}`,
+      `https://kitkat-api.herokuapp.com/api/courses/${this.props.location.state ? this.props.location.state.id : null}`,
       {
         headers: {
           'Authorization': `Bearer ${localStorage.getItem("token")}`
