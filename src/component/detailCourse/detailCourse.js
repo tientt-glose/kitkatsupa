@@ -1,12 +1,12 @@
-import React, { Component } from 'react';
-import { Row, Col, Card, CardHeader, CardBody, CardSubtitle, CardText, Table } from 'reactstrap';
-import Header from '../../container/Header';
-import { Link, Redirect } from 'react-router-dom';
-import * as axios from 'axios';
+import React, { Component } from 'react'
+import { Row, Col, Card, CardHeader, CardBody, CardSubtitle, CardText, Table } from 'reactstrap'
+import Header from '../../container/Header'
+import { Link, Redirect } from 'react-router-dom'
+import * as axios from 'axios'
 
 class DetailCourse extends Component {
 
-  constructor(props) {
+  constructor (props) {
     super(props)
     this.state = {
       error: null,
@@ -17,11 +17,9 @@ class DetailCourse extends Component {
         teacher: {
           fullname: "Teacher's fullname"
         },
-        lessons: [
-
-        ]
+        lessons: null
       }
-    };
+    }
   }
 
   componentDidMount() {
@@ -52,9 +50,9 @@ class DetailCourse extends Component {
       }
     )
       .then(response => {
-        this.setState({ course: response.data });
+        this.setState({ course: response.data })
       })
-      .catch(err => console.log(err));
+      .catch(err => console.log(err))
   }
 
   render() {
@@ -89,17 +87,23 @@ class DetailCourse extends Component {
                 </thead>
                 <tbody>
                   {
-                    this.state.course.lessons.map((lesson, index) => (
-                      <tr>
-                        <th scope="row">{index + 1}</th>
-                        <Link
-                          to={{
-                            pathname: window.location.pathname.includes('/achievement-course') ? "/achievement-course-lesson" : "/lesson-detail",
-                            state: { id: lesson.id, teacher: { fullname: this.state.course.teacher.fullname }, courseId: this.state.course.id }
-                          }}
-                        ><td>{lesson.title}</td></Link>
-                      </tr>
-                    ))
+                    !this.state.course.lessons ? <p>Loading lessons data...</p> : (
+                      <>
+                        {
+                          this.state.course.lessons.length > 0 ? this.state.course.lessons.map((lesson, index) => (
+                            <tr>
+                              <th scope="row">{index + 1}</th>
+                              <Link
+                                to={{
+                                  pathname: window.location.pathname.includes('/achievement-course') ? "/achievement-course-lesson" : "/lesson-detail",
+                                  state: { id: lesson.id, teacher: { fullname: this.state.course.teacher.fullname }, courseId: this.state.course.id }
+                                }}
+                              ><td>{lesson.title}</td></Link>
+                            </tr>
+                          )) : <p>レッスンまだありません。</p>
+                        }
+                      </>
+                    )
                   }
                 </tbody>
               </Table>
@@ -107,9 +111,9 @@ class DetailCourse extends Component {
           </Row>
         </div>
       </div>
-    );
+    )
   }
 
 }
 
-export default DetailCourse;
+export default DetailCourse
