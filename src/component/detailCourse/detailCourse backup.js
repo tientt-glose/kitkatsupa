@@ -46,7 +46,7 @@ class DetailCourse extends Component {
   async listenCourse() {
     await axios({
       method: 'GET',
-      url: 'http://kitkat-api.herokuapp.com/api/courses/820346cf-232a-49dc-8c73-9e8354bef18a',
+      url: 'https://kitkat-api.herokuapp.com/api/courses/820346cf-232a-49dc-8c73-9e8354bef18a',
       body: null
     }).then(res => {
       console.log(res.data);

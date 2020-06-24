@@ -36,7 +36,7 @@ class MyProfile extends Component {
         console.log(localStorage.getItem("token"))
 
         axios.get(
-            "http://kitkat-api.herokuapp.com/api/users/" + localStorage.getItem("id"),
+            "https://kitkat-api.herokuapp.com/api/users/" + localStorage.getItem("id"),
             {
                 headers: {
                     'Authorization': `Bearer ${localStorage.getItem("token")}`
@@ -57,7 +57,7 @@ class MyProfile extends Component {
         // axios({
         //     method: "GET",
         //     url:
-        //         "http://kitkat-api.herokuapp.com/api/users/" + localStorage.getItem("id"),
+        //         "https://kitkat-api.herokuapp.com/api/users/" + localStorage.getItem("id"),
         //     header: {
         //         'Authorization': `Bearer ${localStorage.getItem("token")}`,
         //     },
@@ -80,7 +80,7 @@ class MyProfile extends Component {
     //     await axios({
     //       method: "PUT",
     //       url:
-    //         "http://kitkat-api.herokuapp.com/api/users/87d8fff2-d5ae-4958-96e7-8f03a1f58cf6",
+    //         "https://kitkat-api.herokuapp.com/api/users/87d8fff2-d5ae-4958-96e7-8f03a1f58cf6",
     //       body: {
     //         username: name,
     //         email: email,

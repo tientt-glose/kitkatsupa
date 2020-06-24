@@ -22,7 +22,7 @@ class CoursesListForTeacher extends Component {
 
     }
     componentDidMount() {
-        axios.get('http://kitkat-api.herokuapp.com/api/courses/anonymous')
+        axios.get('https://kitkat-api.herokuapp.com/api/courses/anonymous')
             .then(response => {
                 this.setState({ items: response.data });
                 console.log(response.data);

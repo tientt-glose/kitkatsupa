@@ -15,14 +15,15 @@ class LessonInfoForAchievement extends Component {
         title: "Title",
         description: "Description",
         content: "Content",
-      }
+      },
+      answers: []
     };
   }
 
   componentDidMount() {
     console.log({ state: this.props.location.state })
     axios.get(
-      `http://kitkat-api.herokuapp.com/api/lessons/${this.props.location.state ? this.props.location.state.id : null}`,
+      `https://kitkat-api.herokuapp.com/api/lessons/${this.props.location.state ? this.props.location.state.id : null}`,
       {
         headers: {
           'Authorization': `Bearer ${localStorage.getItem("token")}`
@@ -31,9 +32,25 @@ class LessonInfoForAchievement extends Component {
     )
       .then(response => {
         this.setState({ lesson: response.data });
-        console.log(this.state.lesson.exam.title)
+        console.log(this.state.lesson)
       })
       .catch(err => console.log(err));
+
+      if (this.state.lesson.exam) {
+      axios.get(
+        `https://kitkat-api.herokuapp.com/api/exams/${this.state.lesson.exam ? this.state.lesson.exam.id : null}`,
+        {
+          headers: {
+            'Authorization': `Bearer ${localStorage.getItem("token")}`
+          },
+        }
+      )
+        .then(response => {
+          this.setState({ answers: response.data });
+          console.log(this.state.answers)
+        })
+        .catch(err => console.log(err));
+      }
   }
 
   render() {
@@ -72,7 +89,7 @@ class LessonInfoForAchievement extends Component {
                   <h3>宿題</h3>
                 </CardHeader>
                 <CardBody>
-                  <CardSubtitle>課題s：{exam ? exam.title : 'ない'} </CardSubtitle>
+                  <CardSubtitle>課題：{exam ? exam.title : 'ない'} </CardSubtitle>
                   <CardText>内容：<a href={exam ? exam.content : null}>{exam ? 'Click here' : 'ない'}</a></CardText>
                 </CardBody>
               </Card>

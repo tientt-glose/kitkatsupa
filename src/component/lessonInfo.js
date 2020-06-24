@@ -22,7 +22,7 @@ class LessonInfo extends Component {
   componentDidMount() {
     console.log({ state: this.props.location.state })
     axios.get(
-      `http://kitkat-api.herokuapp.com/api/lessons/${this.props.location.state ? this.props.location.state.id : null}`,
+      `https://kitkat-api.herokuapp.com/api/lessons/${this.props.location.state ? this.props.location.state.id : null}`,
       {
         headers: {
           'Authorization': `Bearer ${localStorage.getItem("token")}`
