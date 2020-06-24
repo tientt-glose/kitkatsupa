@@ -49,6 +49,7 @@ class LoginForm extends React.Component {
 			localStorage.setItem("token", response.data.token)
 			localStorage.setItem("id", response.data.id)
 			localStorage.setItem("username", response.data.username)
+			localStorage.setItem("role", response.data.role)
 			this.setState({
 				loggedIn: true
 			})
@@ -90,7 +91,7 @@ class LoginForm extends React.Component {
 							</div>
 						</Link>
 						<p className="loginhere">アカウントを持っていませんか?
-                			<a href="/sign-up" className="loginhere-link">ここでサインアップ</a>
+                			<a href="/auth/sign-up" className="loginhere-link">ここでサインアップ</a>
 						</p>
 						{
 							this.state.loading && <div className="loader"  ></div>

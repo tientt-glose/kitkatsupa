@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import axios from "axios";
-import { withRouter } from 'react-router-dom';
 import '../../Signup.css'
 import Header from '../../container/Header';
 

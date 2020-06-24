@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import {
-    CardDeck, InputGroup, InputGroupAddon, InputGroupText, Input
+    CardDeck, InputGroup, InputGroupAddon, InputGroupText, Input, Button
 } from 'reactstrap';
 // import { Link } from 'react-router-dom';
 import CourseItem from '../component/ForCourses/CourseItem';
@@ -9,7 +9,7 @@ import Header from './Header';
 import * as axios from 'axios';
 
 
-class CoursesListForStudent extends Component {
+class CoursesListForTeacher extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -68,9 +68,11 @@ class CoursesListForStudent extends Component {
                         </InputGroupAddon>
                     </InputGroup>
                 </div>
-                <div style={{ margin: 25, textAlign:"center"}}>
-                    {window.location.pathname.includes('/achievement') ? <h5>評価のためにコースを一つ選んでください!</h5> : null}
+
+                <div style={{ textAlign: "right", margin: 25, marginRight: 50 }}>
+                    <Button color="primary">コースを登録する</Button>
                 </div>
+
                 <CardDeck style={{ margin: 15 }}>
                     {courselist}
                 </CardDeck>
@@ -79,4 +81,4 @@ class CoursesListForStudent extends Component {
     }
 }
 
-export default CoursesListForStudent;
+export default CoursesListForTeacher;
