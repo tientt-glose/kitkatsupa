@@ -4,7 +4,7 @@ import Header from '../container/Header';
 import * as axios from 'axios';
 import { Link, Redirect } from 'react-router-dom';
 
-class LessonInfo extends Component {
+class LessonInfoForTeacher extends Component {
 
   constructor(props) {
     super(props)
@@ -46,6 +46,7 @@ class LessonInfo extends Component {
       <div>
         <Header />
         <div style={{ margin: 50 }}>
+
           <Row>
             <Col xs="6" sm="4">
               <Card outline color="primary">
@@ -58,11 +59,38 @@ class LessonInfo extends Component {
                   >
                     <h3>Back to course</h3>
                   </Link>
-                  <h3>{this.state.lesson.title}</h3>
+                  <Input type="text" value={this.state.lesson.title} />
                 </CardHeader>
                 <CardBody>
-                  <CardSubtitle>教師：{this.props.location.state ? this.props.location.state.teacher.fullname : null} </CardSubtitle>
-                  <CardText>内容：{this.state.lesson.description}</CardText>
+                <Form>
+                    <FormGroup row>
+                      <Label sm={3}>教師：</Label>
+                      <Col sm={9}>
+                        <Input type="select">
+                          <option>{this.props.location.state ? this.props.location.state.teacher.fullname : null}</option>
+                          <option>Kazuki Hirata</option>
+                          <option>Tran Thi Thin</option>
+                          <option>Tien Glose</option>
+                        </Input>
+                        {/* <Input type="text" value={this.state.course.teacher.fullname} /> */}
+                      </Col>
+                    </FormGroup>
+                    <FormGroup row>
+                      <Label sm={3}>内容：</Label>
+                      <Col sm={9}>
+                        <Input type="textarea" value={this.state.lesson.description} />
+                      </Col>
+                    </FormGroup>
+                    <FormGroup row>
+                      <Label sm={3}>動画：</Label>
+                      <Col sm={9}>
+                        <Input type="text" placeholder="新しいリンクを入力してください！"/>
+                      </Col>
+                    </FormGroup>
+                    <div style={{ textAlign: "right" }}>
+                      <Button color="primary">編集</Button>
+                    </div>
+                  </Form>
                 </CardBody>
               </Card>
             </Col>
@@ -74,20 +102,23 @@ class LessonInfo extends Component {
                   <h3>宿題</h3>
                 </CardHeader>
                 <CardBody>
-                  <CardSubtitle>課題：{exam ? exam.title : 'ない'} </CardSubtitle>
-                  <CardText>内容：<a href={exam ? exam.content : null}>{exam ? 'Click here' : 'ない'}</a></CardText>
-                  <Form>
+                <Form>
                     <FormGroup row>
-                      <Label sm={3}>提出のリンク：</Label>
-                      <Col sm={7}>
-                        <Input type="text" placeholder={exam ? "リンクを貼り付けてください！" : null} disabled={exam ? false : true}/>
-                      </Col>
-                      <Col sm={2}>
-                        <Button color="primary" disabled={exam ? false : true}>提出</Button>
+                      <Label sm={3}>課題：</Label>
+                      <Col sm={9}>
+                        <Input type="text" value={exam ? exam.title : null} />
                       </Col>
                     </FormGroup>
+                    <FormGroup row>
+                      <Label sm={3}>内容：</Label>
+                      <Col sm={9}>
+                        <Input type="text" value={exam ? exam.content : null} />
+                      </Col>
+                    </FormGroup>
+                    <div style={{ textAlign: "right" }}>
+                      <Button color="primary">編集</Button>
+                    </div>
                   </Form>
-                  <CardText>点：-/-</CardText>
                 </CardBody>
               </Card>
             </Col>
@@ -100,4 +131,4 @@ class LessonInfo extends Component {
 
 }
 
-export default LessonInfo;
+export default LessonInfoForTeacher;

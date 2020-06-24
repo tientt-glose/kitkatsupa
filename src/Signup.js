@@ -93,7 +93,7 @@ class Signup extends React.Component {
                 <button className="btn btn-success btn-lg btn-block" onClick={this.register} disabled={this.state.buttonDisabled}>サインアップ</button>
             </div>
             <p className="loginhere">すでにアカウントをお持ちですか？ 
-                <a href="/sign-in" className="loginhere-link">ここでログイン</a>
+                <a href="/auth/sign-in" className="loginhere-link">ここでログイン</a>
             </p>
            
             {

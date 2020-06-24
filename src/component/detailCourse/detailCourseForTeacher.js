@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
-import { Row, Col, Card, CardHeader, CardBody, CardSubtitle, CardText, Table } from 'reactstrap';
+import { Row, Col, Card, CardHeader, CardBody, CardSubtitle, CardText, Table, Input, Form, FormGroup, Label, Button } from 'reactstrap';
 import Header from '../../container/Header';
 import { Link, Redirect } from 'react-router-dom';
 import * as axios from 'axios';
 
-class DetailCourse extends Component {
+class DetailCourseForTeacher extends Component {
 
   constructor(props) {
     super(props)
@@ -68,17 +68,38 @@ class DetailCourse extends Component {
           <Row>
             <Col xs="6" sm="4">
               <Card outline color="primary">
-                <CardHeader><h3>{this.state.course.title}</h3></CardHeader>
+                <CardHeader><Input type="text" value={this.state.course.title} /></CardHeader>
                 <CardBody>
-                  <CardSubtitle>教師：{this.state.course.teacher.fullname} </CardSubtitle>
-                  <CardText>内容：{this.state.course.description}</CardText>
+                  <Form>
+                    <FormGroup row>
+                      <Label sm={3}>教師：</Label>
+                      <Col sm={9}>
+                        <Input type="select">
+                          <option>{this.state.course.teacher.fullname}</option>
+                          <option>Kazuki Hirata</option>
+                          <option>Tran Thi Thin</option>
+                          <option>Tien Glose</option>
+                        </Input>
+                        {/* <Input type="text" value={this.state.course.teacher.fullname} /> */}
+                      </Col>
+                      {/* <Col sm={2}>
+                        <Button color="primary" disabled={exam ? false : true}>提出</Button>
+                      </Col> */}
+                    </FormGroup>
+                    <FormGroup row>
+                      <Label sm={3}>内容：</Label>
+                      <Col sm={9}>
+                        <Input type="textarea" value={this.state.course.description} />
+                      </Col>
+                    </FormGroup>
+                    <div style={{ textAlign: "right" }}>
+                      <Button color="primary">編集</Button>
+                    </div>
+                  </Form>
                 </CardBody>
               </Card>
             </Col>
             <Col xs="12" sm="8">
-              <div style={{ margin: 25, textAlign: "center" }}>
-                {window.location.pathname.includes('/achievement-course') ? <h5>次、レッスンを一つ選んでください!</h5> : null}
-              </div>
               <h2>レッスンリスト</h2>
               <Table striped>
                 <thead>
@@ -94,7 +115,7 @@ class DetailCourse extends Component {
                         <th scope="row">{index + 1}</th>
                         <Link
                           to={{
-                            pathname: window.location.pathname.includes('/achievement-course') ? "/achievement-course-lesson" : "/lesson-detail",
+                            pathname: "/lesson-detail",
                             state: { id: lesson.id, teacher: { fullname: this.state.course.teacher.fullname }, courseId: this.state.course.id }
                           }}
                         ><td>{lesson.title}</td></Link>
@@ -112,4 +133,4 @@ class DetailCourse extends Component {
 
 }
 
-export default DetailCourse;
+export default DetailCourseForTeacher;
